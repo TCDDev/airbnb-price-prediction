@@ -1,6 +1,7 @@
 # UGOE ML Course
 
 ## Structure
+- cpp/ → C++ code exposed via pybind11, callable from Python (⚠️ advanced / optional)
 - src/ → reusable code
 - notebooks/ → experiments
 - data/ → datasets (not tracked)
@@ -132,17 +133,62 @@ git push
 
 ---
 
-### Notes on notebooks
+## Exposing C++ functions to Python with pybind11
 
-Jupyter notebooks can cause merge conflicts.
+The `cpp/` directory contains a minimal C++ extension built with `pybind11`, callable from Python as `fast_module`.
 
-* Prefer one person editing a notebook at a time
-* Restart kernel and run all cells before committing
+### Workflow for adding a new C++ function
+
+1. **Write the function** in `cpp/fast_module.cpp`
+
+```cpp id="3b9vkn"
+double power(double base, double exponent) {
+    return std::pow(base, exponent);
+}
+```
+
+2. **Declare it** in `cpp/bindings.cpp`
+
+```cpp id="ivc0sw"
+double power(double base, double exponent);
+```
+
+3. **Expose it to Python** in `cpp/bindings.cpp`
+
+```cpp id="6fgu0v"
+m.def("power", &power, "Raise a number to a power");
+```
+
+4. **Rebuild the extension**
+
+```bash id="ztm748"
+cd cpp
+python -m pip install -e .
+```
+
+5. **Restart the notebook kernel** and import it from Python
+
+```python id="gq98qu"
+import fast_module
+print(fast_module.power(2.0, 3.0))
+```
+
+### Notes
+
+* If the build succeeds, VSCode include/package warnings in `cpp/` can usually be ignored.
+* After changing C++ code, always rebuild and restart the notebook kernel.
+* The basic pattern is:
+
+```text id="4rnif0"
+write function → declare in bindings → m.def(...) → rebuild → restart kernel
+```
 
 
 ### Notes
 
 * Plotly plots may not render correctly on GitHub — open notebooks locally for full output
 * Always run:
+* Jupyter notebooks can cause merge conflicts. Prefer one person editing a notebook at a time
+* Restart kernel and run all cells before committing
 
   * **Restart Kernel → Run All** before committing notebooks
