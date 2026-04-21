@@ -2,6 +2,8 @@
 #include <vector>
 #include <omp.h>
 
+// Toy functions for testing purposes
+
 double add(double a, double b) {
     return a + b;
 }
