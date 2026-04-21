@@ -18,6 +18,7 @@
 * Python (3.11+ recommended)
 * VSCode
 * VSCode extensions:
+* Git
 
   * Python (Microsoft)
   * Jupyter (Microsoft)
