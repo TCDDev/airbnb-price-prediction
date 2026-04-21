@@ -183,9 +183,6 @@ print(fast_module.power(2.0, 3.0))
 write function → declare in bindings → m.def(...) → rebuild → restart kernel
 ```
 
-
-### Notes
-
 * Plotly plots may not render correctly on GitHub — open notebooks locally for full output
 * Always run:
 * Jupyter notebooks can cause merge conflicts. Prefer one person editing a notebook at a time
