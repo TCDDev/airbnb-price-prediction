@@ -18,11 +18,9 @@
 * Python (3.11+ recommended)
 * VSCode
 * VSCode extensions:
-* Git
-
   * Python (Microsoft)
   * Jupyter (Microsoft)
-
+* Git (Obviously)
 ---
 
 ### 2. Clone the repository
