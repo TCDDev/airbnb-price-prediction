@@ -128,7 +128,7 @@ git push
 
 * Use branches for assignments and features
 * Always `git pull` before starting work
-* Avoid editing the same notebook at the same time
+* **Avoid editing the same notebook at the same time**
 * Use clear commit messages
 
 ---
