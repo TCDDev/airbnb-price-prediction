@@ -1,16 +1,23 @@
 # UGOE ML Course
 
+_Liam Lang · Louisa Woop · Tahir Can Dermanlı_ 
+
 ## Structure
-- cpp/ → C++ code exposed via pybind11, callable from Python (⚠️ advanced / optional)
-- src/ → reusable code
-- notebooks/ → experiments
-- data/ → datasets (not tracked)
+
+* cpp/ → C++ code exposed via pybind11, callable from Python (⚠️ advanced / optional)
+* src/ → reusable code
+* notebooks/ → experiments
+* data/ → datasets (not tracked)
+
+---
 
 ## Notes
 
 * Jupyter notebooks use Plotly for interactive plots.
 * These plots may not render correctly in GitHub’s preview.
 * For full visualization, open notebooks locally in VSCode or Jupyter.
+
+---
 
 ## Setup
 
@@ -19,9 +26,11 @@
 * Python (3.11+ recommended)
 * VSCode
 * VSCode extensions:
+
   * Python (Microsoft)
   * Jupyter (Microsoft)
-* Git (Obviously)
+* Git
+
 ---
 
 ### 2. Clone the repository
@@ -61,7 +70,6 @@ Then activate again:
 & .\.venv\Scripts\Activate.ps1
 ```
 
-
 ---
 
 ### 5. Install dependencies
@@ -87,6 +95,14 @@ python -m pip install -r requirements.txt
 * Open a notebook in `notebooks/`
 * Select the `.venv` kernel (top right)
 * Run cells normally
+
+---
+
+## Notebook Guidelines
+
+* **Avoid editing the same notebook at the same time**
+* Always run: **Restart Kernel → Run All** before committing
+* Jupyter notebooks can cause merge conflicts — prefer one person editing at a time
 
 ---
 
@@ -140,26 +156,23 @@ git push
 
 * Use branches for assignments and features
 * Always `git pull` before starting work
-* **Avoid editing the same notebook at the same time**
 * Use clear commit messages
 * Use English for variable and function names
 
 ---
 
-## Exposing C++ functions to Python with pybind11
+## C++ Extension (optional)
 
-The `cpp/` directory contains a minimal C++ extension built with `pybind11`, callable from Python as `fast_module`.
+The `cpp/` directory contains an optional C++ extension built with `pybind11`, callable from Python as `fast_module`.
 
+If you want to use any functions from `fast_module`, the extension must be built locally.
 
-The repository includes an optional C++ extension in `cpp/` using `pybind11`.
-
-If you want to use any functions from C++ `fast_module` in Python, then the extension must be built locally.
-In that case, the following are required on Windows:
+### Requirements (Windows)
 
 * Visual Studio Build Tools
 * CMake
 
-#### Install
+### Install
 
 1. Install Visual Studio Build Tools:
    https://aka.ms/buildtools
@@ -171,25 +184,32 @@ In that case, the following are required on Windows:
 2. Install CMake:
    https://cmake.org/download/
 
-#### Build the extension
+---
 
-```bash id="32143a"
+### Build the extension
+
+```bash
 cd cpp
 python -m pip install -e .
 ```
 
-#### Important
+---
+
+### Notes
 
 * If you are not using any functions from `fast_module`, you can ignore the `cpp/` directory.
 * If you are using `fast_module`, the C++ toolchain is required.
+* VSCode may show pybind11 include/package warnings — these can be ignored if the build succeeds.
 
+---
 
+## Exposing C++ functions to Python with pybind11
 
 ### Workflow for adding a new C++ function
 
 1. **Write the function** in `cpp/fast_module.cpp`
 
-```cpp id="3b9vkn"
+```cpp
 double power(double base, double exponent) {
     return std::pow(base, exponent);
 }
@@ -197,41 +217,34 @@ double power(double base, double exponent) {
 
 2. **Declare it** in `cpp/bindings.cpp`
 
-```cpp id="ivc0sw"
+```cpp
 double power(double base, double exponent);
 ```
 
 3. **Expose it to Python** in `cpp/bindings.cpp`
 
-```cpp id="6fgu0v"
+```cpp
 m.def("power", &power, "Raise a number to a power");
 ```
 
 4. **Rebuild the extension**
 
-```bash id="ztm748"
+```bash
 cd cpp
 python -m pip install -e .
 ```
 
 5. **Restart the notebook kernel** and import it from Python
 
-```python id="gq98qu"
+```python
 import fast_module
 print(fast_module.power(2.0, 3.0))
 ```
 
 ---
 
-### Notes
+### Summary
 
-* If the build succeeds, VSCode include/package warnings in `cpp/` can usually be ignored.
-* After changing C++ code, always rebuild and restart the notebook kernel.
-* The basic pattern is:
-```text id="4rnif0"
+```text
 write function → declare in bindings → m.def(...) → rebuild → restart kernel
 ```
-* Plotly plots may not render correctly on GitHub — open notebooks locally for full output
-* Always run: **Restart Kernel → Run All** before committing notebooks
-* Jupyter notebooks can cause merge conflicts. Prefer one person editing a notebook at a time
-  
