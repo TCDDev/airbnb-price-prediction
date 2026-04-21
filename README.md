@@ -130,6 +130,7 @@ git push
 * Always `git pull` before starting work
 * **Avoid editing the same notebook at the same time**
 * Use clear commit messages
+* Use English for variable and function names
 
 ---
 
