@@ -43,11 +43,24 @@ py -3.14 -m venv .venv
 
 ### 4. Activate the environment
 
-**Windows (PowerShell):**
+#### Windows (PowerShell)
 
-```bash
+```powershell
 & .\.venv\Scripts\Activate.ps1
 ```
+
+If you get an execution policy error, run:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+Then activate again:
+
+```powershell
+& .\.venv\Scripts\Activate.ps1
+```
+
 
 ---
 
@@ -180,11 +193,9 @@ print(fast_module.power(2.0, 3.0))
 * If the build succeeds, VSCode include/package warnings in `cpp/` can usually be ignored.
 * After changing C++ code, always rebuild and restart the notebook kernel.
 * The basic pattern is:
-
 ```text id="4rnif0"
 write function → declare in bindings → m.def(...) → rebuild → restart kernel
 ```
-
 * Plotly plots may not render correctly on GitHub — open notebooks locally for full output
 * Always run: **Restart Kernel → Run All** before committing notebooks
 * Jupyter notebooks can cause merge conflicts. Prefer one person editing a notebook at a time
