@@ -150,6 +150,41 @@ git push
 
 The `cpp/` directory contains a minimal C++ extension built with `pybind11`, callable from Python as `fast_module`.
 
+
+The repository includes an optional C++ extension in `cpp/` using `pybind11`.
+
+If you want to use any functions from C++ `fast_module` in Python, then the extension must be built locally.
+In that case, the following are required on Windows:
+
+* Visual Studio Build Tools
+* CMake
+
+#### Install
+
+1. Install Visual Studio Build Tools:
+   https://aka.ms/buildtools
+
+   During installation, select:
+
+   * **Desktop development with C++**
+
+2. Install CMake:
+   https://cmake.org/download/
+
+#### Build the extension
+
+```bash id="32143a"
+cd cpp
+python -m pip install -e .
+```
+
+#### Important
+
+* If you are not using any functions from `fast_module`, you can ignore the `cpp/` directory.
+* If you are using `fast_module`, the C++ toolchain is required.
+
+
+
 ### Workflow for adding a new C++ function
 
 1. **Write the function** in `cpp/fast_module.cpp`
