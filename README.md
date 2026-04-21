@@ -173,6 +173,8 @@ import fast_module
 print(fast_module.power(2.0, 3.0))
 ```
 
+---
+
 ### Notes
 
 * If the build succeeds, VSCode include/package warnings in `cpp/` can usually be ignored.
