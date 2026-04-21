@@ -78,6 +78,69 @@ python -m pip install -r requirements.txt
 
 ---
 
+## Git Workflow
+
+### Basic rule
+
+* Create a branch for any non-trivial work
+* Avoid committing directly to `main` when working in parallel
+
+---
+
+### Daily workflow
+
+Before starting work:
+
+```bash
+git pull
+```
+
+Create a branch:
+
+```bash
+git checkout -b feature/your-name-task
+```
+
+After making changes:
+
+```bash
+git add .
+git commit -m "Describe your changes"
+git push -u origin feature/your-name-task
+```
+
+---
+
+### Merging back into main
+
+When your work is finished:
+
+```bash
+git checkout main
+git pull
+git merge feature/your-name-task
+git push
+```
+
+---
+
+### Team guidelines
+
+* Use branches for assignments and features
+* Always `git pull` before starting work
+* Avoid editing the same notebook at the same time
+* Use clear commit messages
+
+---
+
+### Notes on notebooks
+
+Jupyter notebooks can cause merge conflicts.
+
+* Prefer one person editing a notebook at a time
+* Restart kernel and run all cells before committing
+
+
 ### Notes
 
 * Plotly plots may not render correctly on GitHub — open notebooks locally for full output
