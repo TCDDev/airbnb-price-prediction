@@ -186,7 +186,6 @@ write function → declare in bindings → m.def(...) → rebuild → restart ke
 ```
 
 * Plotly plots may not render correctly on GitHub — open notebooks locally for full output
+* Always run: **Restart Kernel → Run All** before committing notebooks
 * Jupyter notebooks can cause merge conflicts. Prefer one person editing a notebook at a time
-* Restart kernel and run all cells before committing
-
-  * **Restart Kernel → Run All** before committing notebooks
+  
