@@ -45,7 +45,7 @@ cd UGOE-ML-Course
 ### 3. Create a virtual environment
 
 ```bash
-py -3.14 -m venv .venv
+python -3.14 -m venv .venv
 ```
 
 ---
