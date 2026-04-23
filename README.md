@@ -115,31 +115,44 @@ python -m pip install -r requirements.txt
 
 ---
 
-### Daily workflow
+### Create a branch
 
 Before starting work:
 
 ```bash
+git checkout main
 git pull
-```
-
-Create a branch:
-
-```bash
 git checkout -b feature/your-name-task
 ```
+
+---
+
+### Work and commit
 
 After making changes:
 
 ```bash
 git add .
 git commit -m "Describe your changes"
-git push -u origin feature/your-name-task
 ```
 
 ---
 
-### Merging back into main
+### Push your branch
+
+```bash
+git push -u origin feature/your-name-task
+```
+
+After the first push, you can simply use:
+
+```bash
+git push
+```
+
+---
+
+### Merge back into main
 
 When your work is finished:
 
@@ -156,10 +169,10 @@ git push
 
 * Use branches for assignments and features
 * Always `git pull` before starting work
+* **Avoid editing the same notebook at the same time**
 * Use clear commit messages
 * Use English for variable and function names
 
----
 
 ## C++ Extension (optional)
 
