@@ -2,3 +2,10 @@ data/
 .venv/
 __pycache__/
 *.pyc
+build/
+CMakeCache.txt
+CMakeFiles/
+cmake/api/
+.vscode/
+reply/
+*.log
