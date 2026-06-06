@@ -1,10 +1,31 @@
-.venv/
-__pycache__/
-*.pyc
-build/
-CMakeCache.txt
-CMakeFiles/
-cmake/api/
-.vscode/
-reply/
-*.log
+# Jupyter
+.ipynb_checkpoints/
+
+# Data
+data/raw/*
+data/processed/*
+data/external/*
+
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+
+# Results
+results/figures/*
+results/metrics/*
+
+!results/figures/.gitkeep
+!results/metrics/.gitkeep
+
+# Python packaging
+dist/
+*.egg-info/
+
+# Testing / linting
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Environment files
+.env
+.env.*
