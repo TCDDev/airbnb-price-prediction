@@ -1,21 +1,10 @@
 # UGOE ML Course
 
-_Liam Lang · Louisa Woop · Tahir Can Dermanlı_ 
+*Liam Lang · Louisa Woop · Tahir Can Dermanlı*
 
-## Structure
+Machine Learning course project focused on Airbnb price prediction.
 
-* cpp/ → C++ code exposed via pybind11, callable from Python (⚠️ advanced / optional)
-* src/ → reusable code
-* notebooks/ → experiments
-* data/ → datasets (not tracked)
-
----
-
-## Notes
-
-* Jupyter notebooks use Plotly for interactive plots.
-* These plots may not render correctly in GitHub’s preview.
-* For full visualization, open notebooks locally in VSCode or Jupyter.
+The goal is to build reproducible machine learning pipelines using multiple data modalities (tabular, text, image, or spatial data) and compare different predictive approaches.
 
 ---
 
@@ -98,14 +87,6 @@ python -m pip install -r requirements.txt
 
 ---
 
-## Notebook Guidelines
-
-* **Avoid editing the same notebook at the same time**
-* Always run: **Restart Kernel → Run All** before committing
-* Jupyter notebooks can cause merge conflicts — prefer one person editing at a time
-
----
-
 ## Git Workflow
 
 ### Basic rule
@@ -173,8 +154,81 @@ git push
 * Use clear commit messages
 * Use English for variable and function names
 
+---
 
-## C++ Extension (optional)
+## Notebook Guidelines
+
+* **Avoid editing the same notebook at the same time**
+* Always run: **Restart Kernel → Run All** before committing
+* Jupyter notebooks can cause merge conflicts — prefer one person editing at a time
+
+---
+
+## Repository Structure
+
+### Source Code
+
+* src/data/ → data loading and preprocessing
+* src/features/ → feature engineering
+* src/models/ → model training
+* src/evaluation/ → evaluation utilities
+* src/utils/ → shared helper functions
+
+### Notebooks
+
+* notebooks/exploration/ → exploratory analysis
+* notebooks/reports/ → presentation-ready notebooks
+
+### Data
+
+* data/raw/ → original downloaded datasets (not tracked)
+* data/processed/ → cleaned datasets (not tracked)
+
+### Results
+
+* results/figures/ → generated plots
+* results/metrics/ → model evaluation results
+
+### Optional Components
+
+* cpp/ → C++ code exposed via pybind11, callable from Python (⚠️ advanced / optional)
+
+---
+
+## Development Guidelines
+
+* Reusable code belongs in `src/`
+* Exploratory work belongs in `notebooks/`
+* Large datasets should not be committed to Git
+* Use English for variable and function names
+* Profile before optimizing
+
+---
+
+## Data
+
+Datasets are stored locally under:
+
+```text
+data/raw/
+data/processed/
+```
+
+These folders are intentionally excluded from Git.
+
+Each team member should download the required datasets locally.
+
+---
+
+## Notes
+
+* Jupyter notebooks use Plotly for interactive plots.
+* These plots may not render correctly in GitHub’s preview.
+* For full visualization, open notebooks locally in VSCode or Jupyter.
+
+---
+
+## Optional C++ Extension
 
 The `cpp/` directory contains an optional C++ extension built with `pybind11`, callable from Python as `fast_module`.
 
@@ -212,11 +266,11 @@ python -m pip install -e .
 
 * If you are not using any functions from `fast_module`, you can ignore the `cpp/` directory.
 * If you are using `fast_module`, the C++ toolchain is required.
-* VSCode may show pybind11 include/package warnings — these can be ignored if the build succeeds.
+* VSCode may show pybind11 include/package warnings. These can be ignored if the build succeeds.
 
 ---
 
-## Exposing C++ functions to Python with pybind11
+## Exposing C++ Functions to Python with pybind11
 
 ### Workflow for adding a new C++ function
 
