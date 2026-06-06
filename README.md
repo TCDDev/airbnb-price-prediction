@@ -133,16 +133,35 @@ git push
 
 ---
 
-### Merge back into main
+### Merging back into main
+
+Do not merge directly into `main`.
 
 When your work is finished:
+
+1. Push your branch
+2. Open a Pull Request on GitHub
+3. Wait for review/approval
+4. Do not merge until the Pull Request is approved
+
+So:
 
 ```bash
 git checkout main
 git pull
-git merge feature/your-name-task
+git checkout -b feature/your-task 
 git push
 ```
+
+Then:
+
+```bash
+git add .
+git commit -m "Describe your changes"
+git push -u origin feature/your-task
+```
+
+`main` is protected. Direct commits to `main` are not allowed.
 
 ---
 
