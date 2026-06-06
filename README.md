@@ -179,7 +179,7 @@ git push -u origin feature/your-task
 
 * **Avoid editing the same notebook at the same time**
 * Always run: **Restart Kernel → Run All** before committing
-* Jupyter notebooks can cause merge conflicts — prefer one person editing at a time
+* Jupyter notebooks can cause merge conflicts. Prefer one person editing at a time
 
 ---
 
