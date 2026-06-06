@@ -142,7 +142,7 @@ When your work is finished:
 1. Push your branch
 2. Open a Pull Request on GitHub
 3. Wait for review/approval
-4. Do not merge until the Pull Request is approved
+4. Merge only after approval
 
 So:
 
