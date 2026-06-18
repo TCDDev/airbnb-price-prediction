@@ -40,7 +40,14 @@ DROP_COLUMNS = [
     "calendar_last_scraped",
     "calendar_updated",
     "source",
-
+    
+    # Further feature selection
+    "host_location",
+    "host_neighbourhood",
+    "host_verifications",
+    "license",
+    "neighbourhood",
+    "bathrooms_text",
 ]
 
 BOOLEAN_COLUMNS = [
@@ -50,6 +57,12 @@ BOOLEAN_COLUMNS = [
     "has_availability",
     "instant_bookable",
 ]
+
+PERCENTAGE_COLUMNS = [
+    "host_response_rate",
+    "host_acceptance_rate",
+]
+
 
 def clean_price(df:pd.DataFrame) -> pd.DataFrame:
     df = df.dropna(subset=["price"]).copy() # Avoids SettingWithCopyWarning
@@ -76,10 +89,38 @@ def convert_booleans(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+def convert_host_response_time(df: pd.DataFrame) -> pd.DataFrame:
+    mapping = {
+        # 0-3 scale, with a lower number equalling a faster response time by the host
+        "within an hour" : 0,
+        "within a few hours" : 1,
+        "within a day" : 2,
+        "a few days or more" : 3 
+    }
+
+    df["host_response_time"] = (
+        df["host_response_time"].map(mapping)
+    )
+
+    return df
+
+def clean_percentages(df: pd.DataFrame) -> pd.DataFrame:
+    for col in PERCENTAGE_COLUMNS:
+        if col in df.columns:
+            df[col] = (
+                df[col].str.replace("%", "", regex=False) \
+                .astype(float) \
+                / 100
+            )
+    
+    return df
+
 def preprocess_listings(df: pd.DataFrame) -> pd.DataFrame:
     df = clean_price(df)
     df = drop_unused_columns(df)
     df = convert_booleans(df)
+    df = convert_host_response_time(df)
+    df = clean_percentages(df)
     return df
 
 def main() -> None:
