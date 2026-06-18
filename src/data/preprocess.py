@@ -8,8 +8,7 @@ Processing Steps
 ----------------
 1. Remove listings with missing prices.
 2. Convert price strings to numeric values.
-3. Remove identifiers, URLs, metadata, leakage variables,
-   and low-value features.
+3. Remove identifiers, URLs, metadata, leakage variables, and low-value features.
 4. Convert Airbnb boolean values ('t'/'f') to Python booleans.
 5. Ordinally encode host response time categories.
 6. Convert percentage-based features to decimal values.
