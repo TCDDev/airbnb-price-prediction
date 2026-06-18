@@ -297,7 +297,7 @@ df = pd.read_csv(
     PROCESSED_DATA_DIR / "listings_clean.csv"
 )
 ```
-# Notes
+#### Notes
 - `host_since` is retained for potential future feature engineering but is not currently transformed.
 - Review-related missing values are preserved because they correspond to listings with no reviews.
 - Numerical missing values are preserved for downstream handling during model development.
