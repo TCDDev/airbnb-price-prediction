@@ -1,10 +1,29 @@
 """
-Data preprocessing utilities.
+Preprocessing pipeline for the Airbnb Singapore listings dataset.
 
-TODO:
-- Missing value handling
-- Data cleaning
-- Feature preparation
+This module implements the reproducible data cleaning workflow
+used throughout the project.
+
+Processing Steps
+----------------
+1. Remove listings with missing prices.
+2. Convert price strings to numeric values.
+3. Remove identifiers, URLs, metadata, leakage variables,
+   and low-value features.
+4. Convert Airbnb boolean values ('t'/'f') to Python booleans.
+5. Ordinally encode host response time categories.
+6. Convert percentage-based features to decimal values.
+
+Notes
+-----
+Review-related missing values are retained because they correspond
+to listings with zero reviews.
+
+The 'host_since' feature is retained for potential future feature
+engineering but is not currently transformed.
+
+Missing values in numerical attributes are preserved for downstream
+handling during model development.
 """
 
 import pandas as pd

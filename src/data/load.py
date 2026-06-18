@@ -1,10 +1,24 @@
 """
-Dataset loading utilities.
+Data loading utilities for the Airbnb Singapore project.
 
-TODO:
-- Load listings
-- Load reviews
-- Load calendar data
+This module centralizes dataset loading operations and provides
+convenience functions for reading raw tabular and spatial datasets.
+
+Functions
+---------
+load_raw_listings()
+    Load the raw Airbnb listings dataset.
+
+load_neighbourhoods()
+    Load the Singapore neighbourhood GeoJSON dataset.
+
+load_processed_listings()
+    Load the processed listing dataset
+
+Notes
+-----
+Dataset paths are managed through src.utils.paths to ensure
+consistent file access across notebooks and scripts.
 """
 
 from pathlib import Path
