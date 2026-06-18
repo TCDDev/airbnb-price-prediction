@@ -83,6 +83,7 @@ PERCENTAGE_COLUMNS = [
 
 
 def clean_price(df:pd.DataFrame) -> pd.DataFrame:
+    """Remove missing prices and convert price strings to floats."""
     df = df.dropna(subset=["price"]).copy() # Avoids SettingWithCopyWarning
 
     df["price"] = (
@@ -99,6 +100,7 @@ def drop_unused_columns(df:pd.DataFrame) -> pd.DataFrame:
 
 
 def convert_booleans(df: pd.DataFrame) -> pd.DataFrame:
+    
     mapping = {"t": True, "f": False}
 
     for col in BOOLEAN_COLUMNS:
@@ -108,6 +110,7 @@ def convert_booleans(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def convert_host_response_time(df: pd.DataFrame) -> pd.DataFrame:
+    """Ordinally encode host response time categories."""
     mapping = {
         # 0-3 scale, with a lower number equalling a faster response time by the host
         "within an hour" : 0,
@@ -123,6 +126,7 @@ def convert_host_response_time(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def clean_percentages(df: pd.DataFrame) -> pd.DataFrame:
+    """Convert percentage strings to decimal values."""
     for col in PERCENTAGE_COLUMNS:
         if col in df.columns:
             df[col] = (
