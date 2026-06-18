@@ -1,10 +1,11 @@
 """
 Shared project paths.
 
-TODO:
-- Data directories
-- Results directories
-- Configuration paths
+ALlows for ergonomic importing of file paths.
+
+RAW_DATA_DIR -> Location of the raw AirBnB data
+PROCESSED_DATA_DIR -> Location of the preprocessed datasets
+EXTERNAL_DATA_DIR -> Location of any external (i.e. non-AirBnB) data
 """
 
 from pathlib import Path
