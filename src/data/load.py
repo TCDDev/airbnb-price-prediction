@@ -10,7 +10,7 @@ load_raw_listings()
     Load the raw Airbnb listings dataset.
 
 load_neighbourhoods()
-    Load the Singapore neighbourhood GeoJSON dataset.
+    Load the Singapore neighborhood GeoJSON dataset.
 
 load_processed_listings()
     Load the processed listing dataset
