@@ -247,6 +247,61 @@ Each team member should download the required datasets locally.
 
 ---
 
+## Dataset Setup
+
+Download the Airbnb dataset files provided for the project and extract:
+
+- `listings.csv`
+- `neighbourhoods.geojson`
+
+Place both files in:
+
+data/raw/
+
+Expected directory structure:
+
+data/
+├── raw/
+│   ├── listings.csv
+│   └── neighbourhoods.geojson
+├── processed/
+└── ...
+Generating the Cleaned Dataset
+
+Run:
+
+`python -m src.data.preprocess`
+
+This preprocessing pipeline:
+
+- Removes listings with missing prices
+- Converts price values to numeric format
+- Removes unused and leakage-related features
+- Converts Airbnb boolean values (`t` / `NaN`) to Python booleans
+- Encodes host response time categories
+- Converts percentage features to decimal values
+
+The cleaned dataset will be generated at:
+
+data/processed/listings_clean.csv
+
+## Loading the Cleaned Dataset
+
+Example:
+
+```python
+import pandas as pd
+from src.utils.paths import PROCESSED_DATA_DIR
+
+df = pd.read_csv(
+    PROCESSED_DATA_DIR / "listings_clean.csv"
+)
+```
+# Notes
+- `host_since` is retained for potential future feature engineering but is not currently transformed.
+- Review-related missing values are preserved because they correspond to listings with no reviews.
+- Numerical missing values are preserved for downstream handling during model development.
+
 ## Optional C++ Extension
 
 The `cpp/` directory contains an optional C++ extension built with `pybind11`, callable from Python as `fast_module`.
