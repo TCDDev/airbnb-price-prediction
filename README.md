@@ -259,7 +259,7 @@ Place both files in:
 `data/raw/`
 
 Download the MRT/LRT station exits dataset from the
-[LTA MRT Station Exit (GEOJSON)](https://beta.data.gov.sg/datasets/d_7478d0c4088deebf06c7db04e4744f8a/view)
+[LTA MRT Station Exit (GEOJSON)](https://data.gov.sg/datasets?query=LTA+MRT+Station+Exit+(GEOJSON)&resultId=d_b39d3a0871985372d7e1637193335da5)
 page on Singapore's Open Data Portal.
 
 Place the file in
