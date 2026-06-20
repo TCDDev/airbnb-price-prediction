@@ -1,33 +1,35 @@
 """
-Preprocessing pipeline for the Airbnb Singapore listings dataset.
+Preprocessing pipeline for the Airbnb Singapore listings dataset
 
 This module implements the reproducible data cleaning workflow
-used throughout the project.
+used throughout the project
 
 Processing Steps
 ----------------
 1. Remove listings with missing prices.
-2. Convert price strings to numeric values.
-3. Remove identifiers, URLs, metadata, leakage variables, and low-value features.
-4. Convert Airbnb boolean values ('t'/'f') to Python booleans.
-5. Ordinally encode host response time categories.
-6. Convert percentage-based features to decimal values.
+2. Convert price strings to numeric values
+3. Remove identifiers, URLs, metadata, leakage variables, and low-value features
+4. Convert Airbnb boolean values ('t'/'f') to Python booleans
+5. Ordinally encode host response time categories
+6. Convert percentage-based features to decimal values
+7. Adds spatial modality features (see spatial.py)
 
 Notes
 -----
 Review-related missing values are retained because they correspond
-to listings with zero reviews.
+to listings with zero reviews
 
 The 'host_since' feature is retained for potential future feature
-engineering but is not currently transformed.
+engineering but is not currently transformed
 
 Missing values in numerical attributes are preserved for downstream
-handling during model development.
+handling during model development
 """
 
 import pandas as pd
-
-from src.data.load import load_raw_listings
+import geopandas as gpd
+from src.data.load import (load_raw_listings, load_neighbourhoods, load_rail_stations)
+from src.features.spatial import add_spatial_features
 from src.utils.paths import PROCESSED_DATA_DIR
 
 DROP_COLUMNS = [
@@ -146,11 +148,16 @@ def preprocess_listings(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def main() -> None:
-    df = load_raw_listings()
-    cleaned = preprocess_listings(df)
+    listings = load_raw_listings()
+    neighbourhood = load_neighbourhoods()
+    rail_stations = load_rail_stations()
+
+    listings = preprocess_listings(listings)
+
+    listings = add_spatial_features(listings, neighbourhood, rail_stations)
 
     PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
-    cleaned.to_csv(PROCESSED_DATA_DIR / "listings_clean.csv", index=False)
+    listings.to_csv(PROCESSED_DATA_DIR / "listings_clean.csv", index=False)
 
 if __name__ == "__main__":
     main()

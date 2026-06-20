@@ -38,7 +38,7 @@ from haversine import haversine
 from src.data.load import load_processed_listings, load_neighbourhoods, load_rail_stations
 
 CBD = (1.283, 103.851) # Approximate center of Singapore's Central Business District
-CHANGI_AIRPORT = (1.3644, 103.9915) # Approximate centre point of Singapore Changi Airport.
+CHANGI_AIRPORT = (1.3644, 103.9915) # Approximate centre point of Singapore Changi Airport
 
 def add_neighbourhood_density(df: pd.DataFrame, gdf: gpd.GeoDataFrame) -> pd.DataFrame:
     """
@@ -103,6 +103,16 @@ def add_distance_to_point(df: pd.DataFrame, point: tuple[float, float], column_n
     df = df.copy()
 
     df[column_name] = df.apply(lambda row: haversine((row["latitude"], row["longitude"]), point), axis=1)
+
+    return df
+
+def add_spatial_features(df: pd.DataFrame, neighbourhoods: gpd.GeoDataFrame, rail_exits: gpd.GeoDataFrame) -> pd.DataFrame:
+    """Append all spatial features to the listing dataset"""
+
+    df = add_neighbourhood_density(df, neighbourhoods)
+    df = add_distance_to_nearest_rail(df, rail_exits)
+    df = add_distance_to_point(df, CBD, "distance_to_CBD")
+    df = add_distance_to_point(df, CHANGI_AIRPORT, "distance_to_changi")
 
     return df
 
