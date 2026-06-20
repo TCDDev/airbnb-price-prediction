@@ -12,6 +12,9 @@ load_raw_listings()
 load_neighbourhoods()
     Load the Singapore neighborhood GeoJSON dataset.
 
+load_rail_stations()
+    Load the external rail exit dataset from the external GeoJSON
+
 load_processed_listings()
     Load the processed listing dataset
 
@@ -25,14 +28,18 @@ from pathlib import Path
 import pandas as pd
 import geopandas as gpd
 
-from src.utils.paths import RAW_DATA_DIR, PROCESSED_DATA_DIR
+from src.utils.paths import RAW_DATA_DIR, PROCESSED_DATA_DIR, EXTERNAL_DATA_DIR
 
 def load_raw_listings(path: Path | None = None) -> pd.DataFrame:
     path = path or RAW_DATA_DIR / "listings.csv"
     return pd.read_csv(path)
 
-def load_neighborhoods(path: Path | None = None) -> gpd.DataFrame:
+def load_neighbourhoods(path: Path | None = None) -> gpd.GeoDataFrame:
     path = path or RAW_DATA_DIR / "neighbourhoods.geojson"
+    return gpd.read_file(path)
+
+def load_rail_stations(path: Path | None = None) -> gpd.GeoDataFrame:
+    path = path or EXTERNAL_DATA_DIR / "LTAMRTStationExitGEOJSON.geojson"
     return gpd.read_file(path)
 
 def load_processed_listings(path: Path | None = None) -> pd.DataFrame:
