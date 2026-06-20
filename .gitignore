@@ -17,6 +17,9 @@ results/metrics/*
 !results/figures/.gitkeep
 !results/metrics/.gitkeep
 
+# Past work
+notebooks/past_projects
+
 # Python packaging
 dist/
 *.egg-info/
