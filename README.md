@@ -251,7 +251,7 @@ Each team member should download the required datasets locally.
 
 Download the Airbnb dataset files provided for the project and extract:
 
-- `listings.csv`
+- `listings.csv.gz` (extract first; the preprocessing pipeline expects the extracted file, not the summary `listings.csv` download)
 - `neighbourhoods.geojson`
 
 Place both files in:
