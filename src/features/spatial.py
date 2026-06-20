@@ -38,7 +38,7 @@ from haversine import haversine
 from src.data.load import load_processed_listings, load_neighbourhoods, load_rail_stations
 
 CBD = (1.283, 103.851) # Approximate center of Singapore's Central Business District
-CHANGI_AIRPORT = (1.3644, 103.9915)
+CHANGI_AIRPORT = (1.3644, 103.9915) # Approximate centre point of Singapore Changi Airport.
 
 def add_neighbourhood_density(df: pd.DataFrame, gdf: gpd.GeoDataFrame) -> pd.DataFrame:
     """
