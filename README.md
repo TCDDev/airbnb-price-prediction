@@ -256,17 +256,17 @@ Download the Airbnb dataset files provided for the project and extract:
 
 Place both files in:
 
-data/raw/
+`data/raw/`
 
-Expected directory structure:
+Download the MRT/LRT station exits dataset from the
+[LTA MRT Station Exit (GEOJSON)](https://beta.data.gov.sg/datasets/d_7478d0c4088deebf06c7db04e4744f8a/view)
+page on Singapore's Open Data Portal.
 
-data/
-├── raw/
-│   ├── listings.csv
-│   └── neighbourhoods.geojson
-├── processed/
-└── ...
-Generating the Cleaned Dataset
+Place the file in
+
+`data/external/`
+
+## Generating the Cleaned Dataset
 
 Run:
 
@@ -280,10 +280,11 @@ This preprocessing pipeline:
 - Converts Airbnb boolean values (`t` / `NaN`) to Python booleans
 - Encodes host response time categories
 - Converts percentage features to decimal values
+- Appends the geospatial data that has been feature engineered
 
 The cleaned dataset will be generated at:
 
-data/processed/listings_clean.csv
+`data/processed/listings_clean.csv`
 
 ## Loading the Cleaned Dataset
 
