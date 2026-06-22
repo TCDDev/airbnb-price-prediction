@@ -30,6 +30,7 @@ import pandas as pd
 import geopandas as gpd
 from src.data.load import (load_raw_listings, load_neighbourhoods, load_rail_stations)
 from src.features.spatial import add_spatial_features
+from src.features.tabular import add_tabular_features
 from src.utils.paths import PROCESSED_DATA_DIR
 
 DROP_COLUMNS = [
@@ -60,7 +61,7 @@ DROP_COLUMNS = [
     "calendar_last_scraped",
     "calendar_updated",
     "source",
-    
+
     # Further feature selection
     "host_location",
     "host_neighbourhood",
@@ -91,7 +92,7 @@ def clean_price(df:pd.DataFrame) -> pd.DataFrame:
     df["price"] = (
         df["price"].str.replace("$", "", regex=False) \
         .str.replace(",", "", regex=False) \
-        .astype(float)       
+        .astype(float)
     )
 
     return df
@@ -102,7 +103,7 @@ def drop_unused_columns(df:pd.DataFrame) -> pd.DataFrame:
 
 
 def convert_booleans(df: pd.DataFrame) -> pd.DataFrame:
-    
+
     mapping = {"t": True, "f": False}
 
     for col in BOOLEAN_COLUMNS:
@@ -118,7 +119,7 @@ def convert_host_response_time(df: pd.DataFrame) -> pd.DataFrame:
         "within an hour" : 0,
         "within a few hours" : 1,
         "within a day" : 2,
-        "a few days or more" : 3 
+        "a few days or more" : 3
     }
 
     df["host_response_time"] = (
@@ -136,7 +137,7 @@ def clean_percentages(df: pd.DataFrame) -> pd.DataFrame:
                 .astype(float) \
                 / 100
             )
-    
+
     return df
 
 def preprocess_listings(df: pd.DataFrame) -> pd.DataFrame:
@@ -152,7 +153,17 @@ def main() -> None:
     neighbourhood = load_neighbourhoods()
     rail_stations = load_rail_stations()
 
+    snapshot_date = pd.to_datetime(
+        listings["last_scraped"],
+        errors="coerce"
+    ).max()
+
     listings = preprocess_listings(listings)
+
+    listings = add_tabular_features(
+        listings,
+        reference_date=snapshot_date
+    )
 
     listings = add_spatial_features(listings, neighbourhood, rail_stations)
 
