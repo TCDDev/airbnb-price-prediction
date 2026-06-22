@@ -1,3 +1,6 @@
+build
+cpp
 data
 notebooks
+results
 src

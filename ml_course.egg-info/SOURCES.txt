@@ -5,4 +5,16 @@ ml_course.egg-info/SOURCES.txt
 ml_course.egg-info/dependency_links.txt
 ml_course.egg-info/top_level.txt
 src/__init__.py
-src/model.py
+src/config/__init__.py
+src/data/__init__.py
+src/data/load.py
+src/data/preprocess.py
+src/evaluation/__init__.py
+src/evaluation/metrics.py
+src/features/__init__.py
+src/features/spatial.py
+src/models/__init__.py
+src/models/ols_lin_reg.py
+src/models/train.py
+src/utils/__init__.py
+src/utils/paths.py

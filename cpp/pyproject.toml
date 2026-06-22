@@ -8,3 +8,7 @@ version = "0.1.0"
 
 [tool.scikit-build]
 cmake.source-dir = "."
+cmake.build-type = "Release"
+
+[tool.sckit-build.cmake.define]
+CMAKE_CXX_COMPILER = "cl"

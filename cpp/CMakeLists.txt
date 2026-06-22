@@ -18,9 +18,10 @@ pybind11_add_module(fast_module
     fast_module.cpp
 )
 
-if(OpenMP_CXX_FOUND)
-    target_compile_options(fast_module PRIVATE ${OpenMP_CXX_FLAGS})
-    target_link_options(fast_module PRIVATE ${OpenMP_CXX_FLAGS})
-endif()
+target_link_libraries(
+    fast_module
+    PRIVATE
+    OpenMP::OpenMP_CXX
+)
 
 install(TARGETS fast_module DESTINATION .)
