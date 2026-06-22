@@ -9,7 +9,10 @@ import numpy as np
 import pandas as pd
 
 
-def add_tabular_features(df: pd.DataFrame) -> pd.DataFrame:
+def add_tabular_features(
+    df: pd.DataFrame,
+    reference_date: pd.Timestamp,
+) -> pd.DataFrame:
     """
     Add tabular features to the cleaned Airbnb listings dataset.
 
@@ -24,26 +27,25 @@ def add_tabular_features(df: pd.DataFrame) -> pd.DataFrame:
         Dataframe with additional engineered tabular features.
     """
     df = df.copy()
+    reference_date = pd.Timestamp(reference_date).normalize()
 
     # Host tenure features
     if "host_since" in df.columns:
         host_since = pd.to_datetime(df["host_since"], errors="coerce")
-        reference_date = pd.Timestamp.today().normalize()
+        host_tenure_days = (reference_date - host_since).dt.days
 
-        df["host_tenure_days"] = (reference_date - host_since).dt.days
-        df["host_tenure_years"] = df["host_tenure_days"] / 365.25
+        df["host_tenure_years"] = host_tenure_days / 365.25
 
     # Review activity features
     if "number_of_reviews" in df.columns:
         df["log_number_of_reviews"] = np.log1p(df["number_of_reviews"])
+        df["has_reviews"] = (df["number_of_reviews"].fillna(0) > 0).astype(int)
 
     if "reviews_per_month" in df.columns:
-        df["has_reviews"] = df["reviews_per_month"].notna().astype(int)
         df["log_reviews_per_month"] = np.log1p(df["reviews_per_month"].fillna(0))
 
     if "last_review" in df.columns:
         last_review = pd.to_datetime(df["last_review"], errors="coerce")
-        reference_date = pd.Timestamp.today().normalize()
 
         df["days_since_last_review"] = (reference_date - last_review).dt.days
         df["has_recent_review"] = (df["days_since_last_review"] <= 180).astype(int)
@@ -84,11 +86,34 @@ def add_tabular_features(df: pd.DataFrame) -> pd.DataFrame:
     if "property_type" in df.columns:
         property_type = df["property_type"].astype(str).str.lower()
 
-        df["property_type_grouped"] = "other"
-        df.loc[property_type.str.contains("apartment|rental unit", na=False), "property_type_grouped"] = "apartment"
-        df.loc[property_type.str.contains("condo|condominium", na=False), "property_type_grouped"] = "condo"
-        df.loc[property_type.str.contains("house|home", na=False), "property_type_grouped"] = "house"
-        df.loc[property_type.str.contains("hotel|hostel", na=False), "property_type_grouped"] = "hotel"
-        df.loc[property_type.str.contains("serviced", na=False), "property_type_grouped"] = "serviced_apartment"
+        grouped_property_type = pd.Series("other", index=df.index)
+
+        grouped_property_type.loc[
+            property_type.str.contains("apartment|rental unit", na=False)
+        ] = "apartment"
+
+        grouped_property_type.loc[
+            property_type.str.contains("condo|condominium", na=False)
+        ] = "condo"
+
+        grouped_property_type.loc[
+            property_type.str.contains("house|home", na=False)
+        ] = "house"
+
+        grouped_property_type.loc[
+            property_type.str.contains("hotel|hostel", na=False)
+        ] = "hotel"
+
+        grouped_property_type.loc[
+            property_type.str.contains("serviced", na=False)
+        ] = "serviced_apartment"
+
+        property_type_dummies = pd.get_dummies(
+            grouped_property_type,
+            prefix="property_type",
+            dtype=int,
+        )
+
+        df = pd.concat([df, property_type_dummies], axis=1)
 
     return df
