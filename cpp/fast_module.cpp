@@ -1,5 +1,8 @@
 #include <cmath>
+#include <cstddef>
 #include <omp.h>
+#include <stdexcept>
+#include <vector>
 #include "haversine.hpp"
 
 // Toy functions for testing purposes
@@ -56,4 +59,32 @@ namespace geo {
         return EARTH_RADIUS_KM * c;
 
     }
+
+    std::vector<double> fast_haversine_batch(
+        const std::vector<double> &lat1, 
+        const std::vector<double> &lat2, 
+        const std::vector<double> &lon1, 
+        const std::vector<double> &lon2
+    ) {
+        const std::size_t n = lat1.size();
+
+        if (
+            lon1.size() != n ||
+            lat2.size() != n ||
+            lon2.size() != n
+        ) {
+            throw std::invalid_argument ("All input vectors must be of the same size");
+        }
+
+        std::vector<double> distances(n);
+
+        #pragma omp parallel for
+        for (int i = 0; i < static_cast<int>(n); ++i) {
+            distances[i] = fast_haversine(lat1[i], lon1[i], lat2[i], lon2[i]);
+        }
+    
+        return distances;
+    }
+
+    
 }

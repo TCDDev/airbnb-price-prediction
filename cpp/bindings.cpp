@@ -4,6 +4,8 @@
 // Safe to ignore unless the actual build fails.
 
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
 #include "haversine.hpp"
 
 namespace py = pybind11;
@@ -17,4 +19,5 @@ PYBIND11_MODULE(fast_module, m) {
     m.def("power", &power, "Raise a number to a power");
     m.def("parallel_sum", &parallel_sum, "Parallelized summing with OpenMP");
     m.def("fast_haversine", &geo::fast_haversine, "Compute haversine distance in km");
+    m.def("fast_haversine_batch", &geo::fast_haversine_batch, "Compute multiple Haversine distances in parallel");
 }
