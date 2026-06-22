@@ -298,6 +298,15 @@ df = pd.read_csv(
     PROCESSED_DATA_DIR / "listings_clean.csv"
 )
 ```
+
+Alternatively:
+
+```python
+import pandas as pd
+from src.preprocess.load import load_processed_listings
+
+df = load_processed_listings()
+```
 #### Notes
 - `host_since` is retained for potential future feature engineering but is not currently transformed.
 - Review-related missing values are preserved because they correspond to listings with no reviews.
