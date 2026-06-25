@@ -143,9 +143,9 @@ def train_baseline():
     print(f"MAE (Test)             : {mae:.2f} SGD")
     print(f"RMSE (Test)            : {rmse:.2f} SGD")
     print("-" * 40)
-    print(f"Reiner Trainings-R²    : {r2_train:.4f}")
-    print(f"Echter Test-R²          : {r2_test:.4f}")
-    print(f"Overfitting-Kluft (Gap): {overfitting_gap:.4f}")
+    print(f"Training R²    : {r2_train:.4f}")
+    print(f"Test R²          : {r2_test:.4f}")
+    print(f"Overfitting Gap: {overfitting_gap:.4f}")
     print("="*40)
     
     if overfitting_gap < 0.12:
