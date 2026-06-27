@@ -303,7 +303,7 @@ Alternatively:
 
 ```python
 import pandas as pd
-from src.preprocess.load import load_processed_listings
+from src.data.load import load_processed_listings
 
 df = load_processed_listings()
 ```
