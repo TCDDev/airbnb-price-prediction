@@ -24,7 +24,7 @@ from sklearn.ensemble import RandomForestRegressor
 
 def build_preprocessor(numerical_cols : list[str],
                        categorical_cols : list[str],
-                       boolean_cols: list[str]) -> ColumnTransformer:
+                       boolean_cols : list[str]) -> ColumnTransformer:
 
     """
     Shared Preprocessing Pipeline
