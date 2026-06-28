@@ -82,7 +82,7 @@ def add_tabular_features(
     pd.DataFrame
         Dataframe with additional engineered tabular features.
     """
-    # df = df.copy()
+    df = df.copy()
     # reference_date = pd.Timestamp(reference_date).normalize()
 
     # # Host tenure features
