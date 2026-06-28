@@ -172,6 +172,13 @@ def add_tabular_features(
 
     #     df = pd.concat([df, property_type_dummies], axis=1)
 
+    df = add_availability_ratio(df)
+    df = add_capacity(df)
+    df = add_host_activity_features(df)
+    df = add_review_activity_features(df)
+    df = add_room_type_indicators(df)
+    df = broaden_property_types(df)
+
     return df
 
 if __name__ == "__main__":
