@@ -16,14 +16,11 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
-from src.data.load import load_processed_listings
 
 # Convenience copy for schema inspection / debugging
 # Training pipeline should receive X and y inside the training script
 # The correct thing to include from src.data.load in this case would be
 # from src.data.load import load_features_and_target
-
-df = load_processed_listings().copy()
 
 def build_preprocessor(numerical_cols : list[str],
                        categorical_cols : list[str],
@@ -52,7 +49,7 @@ def build_preprocessor(numerical_cols : list[str],
     in using the unpacking operator (*).
     """
 
-    return "passthrough" # placeholder
+    return "passthrough" # placeholder, finished function should return a ColumnTransformer object
 
 # Functions below use a placeholder for the build_preprocessor variables
 # Will not run as is
@@ -66,10 +63,12 @@ def build_random_forest_pipeline() -> Pipeline:
     return Pipeline([("preprocessor", build_preprocessor(...)), 
                      ("model", RandomForestRegressor(n_estimators=100, 
                                                      random_state=123, 
-                                                     n_jobs=1))])
+                                                     n_jobs=-1))])
                                                      
 
 if __name__ == "__main__":
-    
-    
-    pass
+    from src.data.load import load_processed_listings
+    df = load_processed_listings().copy()
+
+    # Use this for quick testing/debugging. Remove the pass statement when you actually write code into here
+    print(df.dtypes)
