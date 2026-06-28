@@ -18,6 +18,9 @@ load_rail_stations()
 load_processed_listings()
     Load the processed listing dataset
 
+load_features_and_target()
+    Convenience function that loads both the feature and target variables
+
 Notes
 -----
 Dataset paths are managed through src.utils.paths to ensure
@@ -45,3 +48,11 @@ def load_rail_stations(path: Path | None = None) -> gpd.GeoDataFrame:
 def load_processed_listings(path: Path | None = None) -> pd.DataFrame:
     path = path or PROCESSED_DATA_DIR / "listings_clean.csv"
     return pd.read_csv(path)
+
+def load_features_and_target(path: Path | None = None) -> tuple[pd.DataFrame, pd.Series]:
+    path = path or PROCESSED_DATA_DIR / "listings_clean.csv"
+    df = pd.read_csv(path)
+    y = df["price"]
+    X = df.drop(columns=["price"])
+
+    return X, y
