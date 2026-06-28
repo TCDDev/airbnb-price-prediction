@@ -16,9 +16,14 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
-from src.data.load import load_features_and_target
+from src.data.load import load_processed_listings
 
-X, y = load_features_and_target()
+# Convenience copy for schema inspection / debugging
+# Training pipeline should receive X and y inside the training script
+# The correct thing to include from src.data.load in this case would be
+# from src.data.load import load_features_and_target
+
+df = load_processed_listings().copy()
 
 def build_preprocessor(numerical_cols : list[str],
                        categorical_cols : list[str],
@@ -39,9 +44,18 @@ def build_preprocessor(numerical_cols : list[str],
     - No feature generation 🙂
 
     Those were all already handled upstream in src.data.preprocess
+
+    Hint: Start by using the pandas DataFrame's columns.tolist() method
+    in the outer scope to first create the required lists, then parse
+    them into the function. You can also create a helper function which
+    returns the required lists in a list or tuple, and then parse that
+    in using the unpacking operator (*).
     """
 
     return "passthrough" # placeholder
+
+# Functions below use a placeholder for the build_preprocessor variables
+# Will not run as is
 
 def build_linear_pipeline() -> Pipeline:
     return Pipeline([("preprocessor", build_preprocessor(...)), 
@@ -54,3 +68,8 @@ def build_random_forest_pipeline() -> Pipeline:
                                                      random_state=123, 
                                                      n_jobs=1))])
                                                      
+
+if __name__ == "__main__":
+    
+    
+    pass
