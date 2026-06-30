@@ -69,6 +69,7 @@ DROP_COLUMNS = [
     "license",
     "neighbourhood",
     "bathrooms_text",
+    "host_since" # used to create "host_tenure_years, see add_host_tenure_features"
 ]
 
 BOOLEAN_COLUMNS = [
@@ -112,6 +113,8 @@ def add_host_tenure_features(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def drop_unused_columns(df:pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    
     existing = [col for col in DROP_COLUMNS if col in df.columns]
     return df.drop(columns=existing)
 
@@ -128,6 +131,8 @@ def convert_booleans(df: pd.DataFrame) -> pd.DataFrame:
 
 def convert_host_response_time(df: pd.DataFrame) -> pd.DataFrame:
     """Ordinally encode host response time categories."""
+    
+    df = df.copy()
     mapping = {
         # 0-3 scale, with a lower number equalling a faster response time by the host
         "within an hour" : 0,
