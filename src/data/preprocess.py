@@ -153,17 +153,9 @@ def main() -> None:
     neighbourhood = load_neighbourhoods()
     rail_stations = load_rail_stations()
 
-    snapshot_date = pd.to_datetime(
-        listings["last_scraped"],
-        errors="coerce"
-    ).max()
-
     listings = preprocess_listings(listings)
 
-    listings = add_tabular_features(
-        listings,
-        reference_date=snapshot_date
-    )
+    listings = add_tabular_features(listings)
 
     listings = add_spatial_features(listings, neighbourhood, rail_stations)
 
