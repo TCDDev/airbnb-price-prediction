@@ -98,7 +98,7 @@ def clean_price(df:pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-def add_host_tenure_features(df: pd.DataFrame) -> pd.DataFrame:
+def add_host_tenure_features(df: pd.DataFrame, REFERENCE_DATE=pd.Timestamp("2025-09-28")) -> pd.DataFrame:
     """
     Add host tenure features based on the host_since date
     """

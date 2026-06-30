@@ -175,7 +175,6 @@ def add_tabular_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     df = df.copy()
 
-    df = add_host_tenure_features(df)
     df = add_host_activity_features(df)
     df = add_review_activity_features(df)
     df = add_availability_ratio(df)
