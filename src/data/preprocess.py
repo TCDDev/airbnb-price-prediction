@@ -97,6 +97,20 @@ def clean_price(df:pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+def add_host_tenure_features(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Add host tenure features based on the host_since date
+    """
+    df = df.copy()
+
+    if "host_since" in df.columns:
+        host_since = pd.to_datetime(df["host_since"], errors="coerce")
+        host_tenure_days = (REFERENCE_DATE - host_since).dt.days
+
+        df["host_tenure_years"] = host_tenure_days / 365.25
+
+    return df
+
 def drop_unused_columns(df:pd.DataFrame) -> pd.DataFrame:
     existing = [col for col in DROP_COLUMNS if col in df.columns]
     return df.drop(columns=existing)
@@ -142,6 +156,7 @@ def clean_percentages(df: pd.DataFrame) -> pd.DataFrame:
 
 def preprocess_listings(df: pd.DataFrame) -> pd.DataFrame:
     df = clean_price(df)
+    df = add_host_tenure_features(df)
     df = drop_unused_columns(df)
     df = convert_booleans(df)
     df = convert_host_response_time(df)

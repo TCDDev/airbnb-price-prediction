@@ -14,27 +14,10 @@ import pandas as pd
 REFERENCE_DATE = pd.Timestamp("2025-09-28")
 
 
-def add_host_tenure_features(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Add host tenure features based on the host_since date
-    """
-    df = df.copy()
-
-    if "host_since" in df.columns:
-        host_since = pd.to_datetime(df["host_since"], errors="coerce")
-        host_tenure_days = (REFERENCE_DATE - host_since).dt.days
-
-        df["host_tenure_years"] = host_tenure_days / 365.25
-
-    return df
-
-
 def add_host_activity_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     Currently no additional host activity features here
     """
-    df = df.copy()
-    pass
     return df
 
 
