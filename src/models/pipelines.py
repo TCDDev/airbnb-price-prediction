@@ -2,7 +2,7 @@
 Shared model pipelines
 
 Currently:
-- Median imputation only
+- Template for future work
 
 TODO:
 - Add ColumnTransformer + OneHotEncoder
@@ -17,10 +17,6 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 
-# Convenience copy for schema inspection / debugging
-# Training pipeline should receive X and y inside the training script
-# The correct thing to include from src.data.load in this case would be
-# from src.data.load import load_features_and_target
 
 def build_preprocessor(numerical_cols : list[str],
                        categorical_cols : list[str],
@@ -64,11 +60,20 @@ def build_random_forest_pipeline() -> Pipeline:
                      ("model", RandomForestRegressor(n_estimators=100, 
                                                      random_state=123, 
                                                      n_jobs=-1))])
+
+def build_xgboost_pipeline() -> Pipeline:
+    """Temporary Placeholder"""
+    pass
                                                      
 
 if __name__ == "__main__":
+    # Convenience copy for schema inspection / debugging
+    # Training pipeline should receive X and y inside the training script
+    # The correct thing to include from src.data.load in this case would be
+    # from src.data.load import load_features_and_target
+    
     from src.data.load import load_processed_listings
     df = load_processed_listings().copy()
 
-    # Use this for quick testing/debugging. Remove the pass statement when you actually write code into here
+    # Use lines below for quick testing and debugging
     print(df.dtypes)
