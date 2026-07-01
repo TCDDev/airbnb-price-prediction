@@ -17,7 +17,6 @@ RESULTS_DIR = PROJECT_ROOT / "results"
 
 # Import the ones below for your needs
 
-
 # Directories for datasets
 RAW_DATA_DIR = DATA_DIR / "raw"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
