@@ -13,9 +13,16 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 DATA_DIR = PROJECT_ROOT / "data"
+RESULTS_DIR = PROJECT_ROOT / "results"
 
 # Import the ones below for your needs
 
+
+# Directories for datasets
 RAW_DATA_DIR = DATA_DIR / "raw"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
+
+# Directories for training pipeline results
+FIGURES_DIR = RESULTS_DIR / "figures"
+METRICS_DIR = RESULTS_DIR / "metrics"
