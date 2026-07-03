@@ -26,6 +26,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
+from xgboost import XGBRegressor
 
 
 
@@ -62,12 +63,14 @@ def build_preprocessor(numerical_cols : list[str],
 
 
 def build_linear_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
+    """builds pipeline for linear regression from shared preprocessor"""
     return Pipeline([
         ("preprocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)), 
         ("model", LinearRegression())
     ])
 
 def build_random_forest_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
+    """builds pipeline for random forest from shared preprocessor"""
     return Pipeline([
         ("preprocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)), 
         ("model", RandomForestRegressor(n_estimators=100, 
@@ -75,9 +78,14 @@ def build_random_forest_pipeline(numerical_cols: list[str], categorical_cols: li
                                         n_jobs=-1))
     ])
 
-def build_xgboost_pipeline() -> Pipeline:
-    """Temporary Placeholder"""
-    pass
+def build_xgboost_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
+    """builds pipeline for xgboost from shared preprocessor"""
+    return Pipeline([
+        ("prepocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)),
+        ("model", XGBRegressor(n_estimators=100,
+                               random_state=123,
+                               n_jobs=-1))
+    ])
                                                      
 
 if __name__ == "__main__":
