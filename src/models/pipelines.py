@@ -15,7 +15,6 @@ Model graph:
 
  
 TODO:
-- Add pipeline for XGBoost
 - Nothing else (for now 👁️)
 """
 
