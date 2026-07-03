@@ -10,12 +10,14 @@ TODO:
 """
 
 import pandas as pd
+import numpy as np
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
+
 
 
 def build_preprocessor(numerical_cols : list[str],
@@ -45,21 +47,34 @@ def build_preprocessor(numerical_cols : list[str],
     in using the unpacking operator (*).
     """
 
-    return "passthrough" # placeholder, finished function should return a ColumnTransformer object
+    num_transformer = Pipeline(steps=[('imputer', SimpleImputer(strategy='median'))])
+    cat_transformer = Pipeline(steps=[('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))])
+    bool_transformer = Pipeline(steps=[('imputer', SimpleImputer(strategy='most_frequent'))])
+    
+    preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', num_transformer, numerical_cols), 
+        ('cat', cat_transformer, categorical_cols),
+        ('bool', bool_transformer, boolean_cols)   
+    ],
+    remainder='drop' 
+)
+    return preprocessor 
 
-# Functions below use a placeholder for the build_preprocessor variables
-# Will not run as is
 
-def build_linear_pipeline() -> Pipeline:
-    return Pipeline([("preprocessor", build_preprocessor(...)), 
-                     ("model", 
-                      LinearRegression())])
+def build_linear_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
+    return Pipeline([
+        ("preprocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)), 
+        ("model", LinearRegression())
+    ])
 
-def build_random_forest_pipeline() -> Pipeline:
-    return Pipeline([("preprocessor", build_preprocessor(...)), 
-                     ("model", RandomForestRegressor(n_estimators=100, 
-                                                     random_state=123, 
-                                                     n_jobs=-1))])
+def build_random_forest_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
+    return Pipeline([
+        ("preprocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)), 
+        ("model", RandomForestRegressor(n_estimators=100, 
+                                        random_state=123, 
+                                        n_jobs=-1))
+    ])
 
 def build_xgboost_pipeline() -> Pipeline:
     """Temporary Placeholder"""
@@ -74,6 +89,17 @@ if __name__ == "__main__":
     
     from src.data.load import load_processed_listings
     df = load_processed_listings().copy()
+    
+    X = df.drop(columns=["price"], errors="ignore")
+    
+    numerical_cols = X.select_dtypes(include=[np.number]).columns.tolist()
+    categorical_cols = X.select_dtypes(include=['object', 'category']).columns.tolist()
+    boolean_cols = X.select_dtypes(include=['bool']).columns.tolist()
 
-    # Use lines below for quick testing and debugging
+    print(f"Numerical ({len(numerical_cols)}):", numerical_cols)
+    print(f"Categorical ({len(categorical_cols)}):", categorical_cols)
+    print(f"Boolean ({len(boolean_cols)}):", boolean_cols)
+
+    rf_pipeline = build_random_forest_pipeline(numerical_cols, categorical_cols, boolean_cols)
+    
     print(df.dtypes)
