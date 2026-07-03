@@ -9,7 +9,6 @@ TODO:
 - Nothing else (for now 👁️)
 """
 
-import pandas as pd
 import numpy as np
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
@@ -27,24 +26,14 @@ def build_preprocessor(numerical_cols : list[str],
     """
     Shared Preprocessing Pipeline
 
-    TODO:
-    - Add numeric and categorical feature selection
+    Used jointly by all ML models within the project
+
+    Responsibilities:
     - Median-impute numerical features
-    - One-hot encode categorical features
+    - One-hot encode categorial features
+    - Pass boolean features through unchanged
 
-    Model preprocessing only, so...
-
-    - No TF-IDF 🙂
-    - No Haversine 🙂
-    - No feature generation 🙂
-
-    Those were all already handled upstream in src.data.preprocess
-
-    Hint: Start by using the pandas DataFrame's columns.tolist() method
-    in the outer scope to first create the required lists, then parse
-    them into the function. You can also create a helper function which
-    returns the required lists in a list or tuple, and then parse that
-    in using the unpacking operator (*).
+    Feature engineering and dataset cleaning are intentionally excluded because they're handled upstream
     """
 
     num_transformer = Pipeline([('imputer', SimpleImputer(strategy='median'))])
