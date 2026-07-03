@@ -4,6 +4,16 @@ Shared model pipelines
 Currently:
 - Working pipeline for LinReg and Random Forest models
 
+Model graph:
+
+
+                build_preprocessor()
+                        │
+        ┌───────────────┼───────────────┐
+        ▼               ▼               ▼
+ LinearRegression   RandomForest     XGBoost
+
+ 
 TODO:
 - Add pipeline for XGBoost
 - Nothing else (for now 👁️)
