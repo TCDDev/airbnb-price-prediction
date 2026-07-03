@@ -10,5 +10,7 @@ version = "0.1.0"
 cmake.source-dir = "."
 cmake.build-type = "Release"
 
-[tool.sckit-build.cmake.define]
+if(FALSE)
+[tool.scikit-build.cmake.define]
 CMAKE_CXX_COMPILER = "cl"
+endif()

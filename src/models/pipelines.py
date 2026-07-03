@@ -2,10 +2,10 @@
 Shared model pipelines
 
 Currently:
-- Template for future work
+- Working pipeline for LinReg and Random Forest models
 
 TODO:
-- Add ColumnTransformer + OneHotEncoder
+- Add pipeline for XGBoost
 - Nothing else (for now 👁️)
 """
 
@@ -47,15 +47,15 @@ def build_preprocessor(numerical_cols : list[str],
     in using the unpacking operator (*).
     """
 
-    num_transformer = Pipeline(steps=[('imputer', SimpleImputer(strategy='median'))])
-    cat_transformer = Pipeline(steps=[('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))])
-    bool_transformer = Pipeline(steps=[('imputer', SimpleImputer(strategy='most_frequent'))])
+    num_transformer = Pipeline([('imputer', SimpleImputer(strategy='median'))])
+    cat_transformer = Pipeline([('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))])
+    # bool_transformer = Pipeline([('imputer', SimpleImputer(strategy='most_frequent'))])
     
     preprocessor = ColumnTransformer(
     transformers=[
         ('num', num_transformer, numerical_cols), 
         ('cat', cat_transformer, categorical_cols),
-        ('bool', bool_transformer, boolean_cols)   
+        ('bool', "passthrough", boolean_cols) # Boolean features appear to already be clean after upstream preprocessing, pass them through unchanged 
     ],
     remainder='drop' 
 )
