@@ -64,10 +64,10 @@ def train():
 
     # PLOT
     plt.figure(figsize=(8, 6))
-    plt.scatter(y_test, y_pred, alpha=0.5, color="teal", label="Vorhergesagte Preise")
+    plt.scatter(y_test, y_pred, alpha=0.5, color="teal", label="Predicted Prices")
     
     ideal_line = [y_test.min(), y_test.max()]
-    plt.plot(ideal_line, ideal_line, color="red", linestyle="--", linewidth=2, label="Perfekte Vorhersage")
+    plt.plot(ideal_line, ideal_line, color="red", linestyle="--", linewidth=2, label="Perfect Predictions")
     
     plt.xlabel("True Prices")
     plt.ylabel("Predicted Prices")
