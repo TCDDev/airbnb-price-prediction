@@ -23,7 +23,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 
@@ -64,8 +64,8 @@ def build_preprocessor(numerical_cols : list[str],
 def build_linear_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
     """builds pipeline for linear regression from shared preprocessor"""
     return Pipeline([
-        ("preprocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)),
-        ("model", LinearRegression())
+        ("preprocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)), 
+        ("model", Ridge(alpha = 1.0, random_state = 123))
     ])
 
 def build_random_forest_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
