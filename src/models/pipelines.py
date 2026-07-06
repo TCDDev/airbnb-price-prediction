@@ -13,7 +13,7 @@ Model graph:
         ▼               ▼               ▼
  LinearRegression   RandomForest     XGBoost
 
- 
+
 TODO:
 - Nothing else (for now 👁️)
 """
@@ -49,16 +49,16 @@ def build_preprocessor(numerical_cols : list[str],
     num_transformer = Pipeline([('imputer', SimpleImputer(strategy='median'))])
     cat_transformer = Pipeline([('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False))])
     # bool_transformer = Pipeline([('imputer', SimpleImputer(strategy='most_frequent'))])
-    
+
     preprocessor = ColumnTransformer(
     transformers=[
-        ('num', num_transformer, numerical_cols), 
+        ('num', num_transformer, numerical_cols),
         ('cat', cat_transformer, categorical_cols),
-        ('bool', "passthrough", boolean_cols) # Boolean features appear to already be clean after upstream preprocessing, pass them through unchanged 
+        ('bool', "passthrough", boolean_cols) # Boolean features appear to already be clean after upstream preprocessing, pass them through unchanged
     ],
-    remainder='drop' 
+    remainder='drop'
 )
-    return preprocessor 
+    return preprocessor
 
 
 def build_linear_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
@@ -71,33 +71,46 @@ def build_linear_pipeline(numerical_cols: list[str], categorical_cols: list[str]
 def build_random_forest_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
     """builds pipeline for random forest from shared preprocessor"""
     return Pipeline([
-        ("preprocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)), 
-        ("model", RandomForestRegressor(n_estimators=100, 
-                                        random_state=123, 
+        ("preprocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)),
+        ("model", RandomForestRegressor(n_estimators=100,
+                                        random_state=123,
                                         n_jobs=-1))
     ])
 
-def build_xgboost_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
+def build_xgboost_pipeline(
+    numerical_cols: list[str],
+    categorical_cols: list[str],
+    boolean_cols: list[str],
+) -> Pipeline:
     """builds pipeline for xgboost from shared preprocessor"""
     return Pipeline([
-        ("prepocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)),
-        ("model", XGBRegressor(n_estimators=100,
-                               random_state=123,
-                               n_jobs=-1))
+        ("preprocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)),
+        ("model", XGBRegressor(
+            objective="reg:squarederror",
+            n_estimators=300,
+            learning_rate=0.05,
+            max_depth=4,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            reg_lambda=1.0,
+            random_state=123,
+            n_jobs=-1,
+            eval_metric="rmse",
+        ))
     ])
-                                                     
+
 
 if __name__ == "__main__":
     # Convenience copy for schema inspection / debugging
     # Training pipeline should receive X and y inside the training script
     # The correct thing to include from src.data.load in this case would be
     # from src.data.load import load_features_and_target
-    
+
     from src.data.load import load_processed_listings
     df = load_processed_listings().copy()
-    
+
     X = df.drop(columns=["price"], errors="ignore")
-    
+
     numerical_cols = X.select_dtypes(include=[np.number]).columns.tolist()
     categorical_cols = X.select_dtypes(include=['object', 'category']).columns.tolist()
     boolean_cols = X.select_dtypes(include=['bool']).columns.tolist()
@@ -107,5 +120,5 @@ if __name__ == "__main__":
     print(f"Boolean ({len(boolean_cols)}):", boolean_cols)
 
     rf_pipeline = build_random_forest_pipeline(numerical_cols, categorical_cols, boolean_cols)
-    
+
     print(df.dtypes)
