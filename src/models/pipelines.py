@@ -70,8 +70,12 @@ def build_linear_pipeline(numerical_cols: list[str], categorical_cols: list[str]
 
 def build_random_forest_pipeline(numerical_cols: list[str], categorical_cols: list[str], boolean_cols: list[str]) -> Pipeline:
     """builds pipeline for random forest from shared preprocessor"""
+   
+    cols_to_drop = ["first_review", "last_review", "host_since"]
+    filtered_categorical = [col for col in categorical_cols if col not in cols_to_drop]
+    
     return Pipeline([
-        ("preprocessor", build_preprocessor(numerical_cols, categorical_cols, boolean_cols)),
+        ("preprocessor", build_preprocessor(numerical_cols, filtered_categorical, boolean_cols)),
         ("model", RandomForestRegressor(n_estimators=100,
                                         random_state=123,
                                         n_jobs=-1))
