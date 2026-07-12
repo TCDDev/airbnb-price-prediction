@@ -78,7 +78,7 @@ def build_random_forest_pipeline(numerical_cols: list[str], categorical_cols: li
         ("preprocessor", build_preprocessor(numerical_cols, filtered_categorical, boolean_cols)),
         ("model", RandomForestRegressor(n_estimators=100,
                                         random_state=123,
-                                        n_jobs=-1))
+                                        n_jobs=1))
     ])
 
 def build_xgboost_pipeline(
