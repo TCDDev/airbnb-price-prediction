@@ -4,8 +4,6 @@
 
 Machine Learning course project focused on predicting Airbnb listing prices in Singapore using tabular and geospatial data.
 
-The project emphasizes **reproducible preprocessing**, **shared machine learning pipelines**, and the comparison of multiple regression models.
-
 ---
 
 # Results
