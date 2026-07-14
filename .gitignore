@@ -32,3 +32,31 @@ dist/
 # Environment files
 .env
 .env.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+
+# Packaging
+build/
+dist/
+*.egg-info/
+*.whl
+
+# CMake / native builds
+cpp/build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+*.pyd
+*.lib
+*.exp
+*.pdb
+
+# IDEs
+.idea/
+.vscode/

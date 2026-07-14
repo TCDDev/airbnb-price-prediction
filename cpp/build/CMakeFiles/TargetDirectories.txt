@@ -1,6 +1,0 @@
-C:/Users/Tahir C D/Documents/ml-course/cpp/build/CMakeFiles/fast_module.dir
-C:/Users/Tahir C D/Documents/ml-course/cpp/build/CMakeFiles/edit_cache.dir
-C:/Users/Tahir C D/Documents/ml-course/cpp/build/CMakeFiles/rebuild_cache.dir
-C:/Users/Tahir C D/Documents/ml-course/cpp/build/CMakeFiles/list_install_components.dir
-C:/Users/Tahir C D/Documents/ml-course/cpp/build/CMakeFiles/install.dir
-C:/Users/Tahir C D/Documents/ml-course/cpp/build/CMakeFiles/install/local.dir
