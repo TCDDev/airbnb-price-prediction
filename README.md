@@ -1,6 +1,4 @@
-# UGOE ML Course
-
-**Liam Lang · Louisa Woop · Tahir Can Dermanlı**
+# Airbnb Price Prediction Pipeline
 
 Machine Learning course project focused on predicting Airbnb listing prices in Singapore using tabular and geospatial data.
 
