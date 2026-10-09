@@ -1,6 +1,6 @@
 # Airbnb Price Prediction Pipeline
 
-Machine Learning course project focused on predicting Airbnb listing prices in Singapore using tabular and geospatial data.
+Machine Learning project focused on predicting Airbnb listing prices in Singapore using tabular and geospatial data.
 
 ---
 
